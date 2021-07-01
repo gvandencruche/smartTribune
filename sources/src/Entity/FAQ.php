@@ -61,9 +61,15 @@ class FAQ
      */
     private $answers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=HistoricFaq::class, mappedBy="faq", orphanRemoval=true)
+     */
+    private $historicFaqs;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
+        $this->historicFaqs = new ArrayCollection();
     }
 
   
@@ -139,6 +145,38 @@ class FAQ
 
         return $this;
     }
+
+    /**
+     * @return Collection|HistoricFaq[]
+     */
+    public function getHistoricFaqs(): Collection
+    {
+        return $this->historicFaqs;
+    }
+
+    public function addHistoricFaq(HistoricFaq $historicFaq): self
+    {
+        if (!$this->historicFaqs->contains($historicFaq)) {
+            $this->historicFaqs[] = $historicFaq;
+            $historicFaq->setFaq($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoricFaq(HistoricFaq $historicFaq): self
+    {
+        if ($this->historicFaqs->removeElement($historicFaq)) {
+            // set the owning side to null (unless already changed)
+            if ($historicFaq->getFaq() === $this) {
+                $historicFaq->setFaq(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 
    
 

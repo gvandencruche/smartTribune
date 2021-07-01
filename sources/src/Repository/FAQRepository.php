@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\AnswersFAQ;
+use App\Entity\HistoricFaq;
 use App\Entity\FAQ;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,19 +71,34 @@ class FAQRepository extends ServiceEntityRepository
     {
       try
       {
+        $historic = new HistoricFaq();
         $repository = $this->manager->getRepository('App:FAQ');
         $updatefaq = $repository->find($faq['id']);
 
-        if(isset($faq['title']))
-            $updatefaq->setTitle($faq['title']);
+        if(!empty($faq['title']))
+        {
+          $historic->setTitle($faq['title']);
+          $updatefaq->setTitle($faq['title']);
+        }
+            
     
-        if(isset($faq['status']))
-            $updatefaq->setStatus($faq['status']);
+        if(!empty($faq['status']))
+        {
+          $historic->setStatus($faq['status']);
+          $updatefaq->setStatus($faq['status']);
+        }
+            
     
-       
-         $this->manager->persist($updatefaq);
-         $this->manager->flush();
-         return true;
+  
+        
+        
+        
+        $updatefaq->addHistoricFaq($historic);
+
+        $this->manager->persist($historic);
+        $this->manager->persist($updatefaq);
+        $this->manager->flush();
+        return true;
       }
       catch(Throwable $e)
       {
