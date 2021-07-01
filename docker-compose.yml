@@ -15,7 +15,7 @@ services:
     environment:
       - 'DATABASE_URL=mysql://admin:25021964@db_server:3306/smartTribune?serverVersion=10.5'
     volumes:
-      - ./source:/var/www/html
+      - ./sources:/var/www/html
       - ./docker/server/apache/sites-enabled:/etc/apache2/sites-enabled
       - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
     depends_on:
