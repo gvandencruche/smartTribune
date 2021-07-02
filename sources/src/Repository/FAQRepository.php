@@ -80,21 +80,12 @@ class FAQRepository extends ServiceEntityRepository
           $historic->setTitle($faq['title']);
           $updatefaq->setTitle($faq['title']);
         }
-            
-    
         if(!empty($faq['status']))
         {
           $historic->setStatus($faq['status']);
           $updatefaq->setStatus($faq['status']);
         }
-            
-    
-  
-        
-        
-        
         $updatefaq->addHistoricFaq($historic);
-
         $this->manager->persist($historic);
         $this->manager->persist($updatefaq);
         $this->manager->flush();
@@ -116,31 +107,17 @@ class FAQRepository extends ServiceEntityRepository
     {
       try
       {
+      
+        
         $repository = $this->manager->getRepository('App:'.$entity);
-        $updatefaq = $repository->findAll();
-
+        
+        //TODO Recherche des propriétés de classe de l'entity $entity
+        
+        //TOTO Boucle sur les contents values de l'entity
        
-       
-        foreach($updatefaq as $col=>$row)
-        {
-            echo $col."<pre>";
-            $ligne = (array)$row;
-            var_dump($ligne);
-            echo "</pre>";
-            
-         
-            $ligne = '';
-            foreach($row as $colonne=>$valeur)
-            {
-                echo $colonne." ".$valeur;
-                //$ligne = 
+        //TODO Generation du fichier csv
 
-            }
-           //$data[] = 
-        }
-
-        exit;
-         return true;
+        
       }
       catch(Throwable $e)
       {

@@ -1,7 +1,28 @@
 ## Smart Tribune - Backend - Coding Test :
 
+**Clonage du mini projet**
+git clone https://github.com/gvandencruche/smartTribune.git
 
-**Environement de dev docker :**
+L'archive contient :
+sources : dossier du projet symfony
+docker : dossier de l'image docker
+postman.pdf : test postman de l'API 
+fixture.json : Données de départ de l'analyse
+
+
+**Analyse :**
+*constat de départ*
+La fixture de départ contient un tableau de json pour la valeur answers.
+Je suis donc parti du constat que la FAQ (Question) pouvait etre ratachée à plusieurs réponses publiées ou non.
+
+*La structure de donnée de la base est donc :*
+Une entity FAQ contenant le titre, le promoted, la date de creation, de modification  et le status de la question
+Une entity AnswersFAQ contenant un body de la reponse et le channel
+Une entity HistoricFaq contenant la trace des modifications des Faq
+
+
+
+**Initialisation de l'environement de dev docker :**
 *Lancement de l'image docker :*
 Dans le dossier parent du projet symfony lancer docker compose afin de créer et démarer les containers :
 docker-compose -d --build 
@@ -29,11 +50,12 @@ Un test créé sur l'ajout d'une FAQ
 phpunit (vendor/phpunit/phpunit)
 
 
-##### Step 1:
+##### Ajout FAQ:
 
 Création d'une API POST d'ajout de FAQ (FAQ/add) se basant sur 3 entity :
 FAQ (table des questions)
 AnswersFAQ (table des réponses au questions)
+HistoricFaq (table de l'historisation des modifications des FAQ title ou status)
 
 Les types enum sont gérés par Doctrine en definissant des classes de mappage spécifiques pour channel et status
 Les valeurs requises sont definies dans les classes : 
@@ -45,7 +67,7 @@ Cette API prend comme argument d'entré un json (voir doucument Postman.odt)
 Le test unitaire tests/FAQTest.php est configuré pour tester l'API.
 
 
-##### Step 2:
+##### Modification FAQ:
 
 *Modification d'une FAQ : *
 Création d'une API POST de modification des FAQ (FAQ/update)
@@ -57,12 +79,8 @@ exemple json pour modifier le title et le status de la faq 1 :
     "status": "published"
 }
 
-##### Step 3:
+##### Service export CSV:
 
-1. Create an exporter service which is be able to export any entity type content into CSV file
-2. Use the previously created exporter in order to export HistoricQuestion datas
-
-##### Bonus:
-
-1. Dockerize the project and provide related readme file 
-2. Explain how you would do it if you've been asked to populate HistoricQuestion asynchronously
+Non terminé.
+Le choix de la relation FAQ/AnswersFAQ ne m'a pas permis de réaliser dans les temps la classe d'exportation générique des Entity en CSV.
+TODO dans la classe FAQRepository.php

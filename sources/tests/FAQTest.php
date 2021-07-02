@@ -44,6 +44,20 @@ class FAQTest extends WebTestCase
         $this->assertJsonResponse($response, 201, false);
         
     }
+    public function testExportFAQ(): void
+    {
+       
+        $json = '{
+            "entity": "FAQ"
+        }';
+        
+        $client = static::createClient();
+        $client->request('POST', '/FAQ/export',array(),array(),array('CONTENT_TYPE'=>'application/json'),$json);
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response, 201, false);
+        
+    }
+
 
     protected function assertJsonResponse($response, $statusCode = 200)
     {

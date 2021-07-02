@@ -43,7 +43,7 @@ class FAQController extends AbstractController
     }
 
     /**
-     * @Route("/FAQ/export", name="export_faq", methods={"GET"})
+     * @Route("/FAQ/export", name="export_faq", methods={"POST"})
      */
     public function export(Request $request, FAQRepository $faqRepository)
     {
