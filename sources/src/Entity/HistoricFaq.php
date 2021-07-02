@@ -9,24 +9,24 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass=HistoricFaqRepository::class)
  */
-class HistoricFaq
+class HistoricFaq 
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    public $id;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $title;
+    public $title;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
      */
-    private $status;
+    public $status;
 
     /**
      * @var DateTime $created
@@ -34,7 +34,7 @@ class HistoricFaq
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      * @Gedmo\Timestampable(on="create")
      */
-    protected $createdAt;
+    public $createdAt;
 
     /**
      * @var DateTime $updated
@@ -42,15 +42,19 @@ class HistoricFaq
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      * @Gedmo\Timestampable(on="update")
      */
-    protected $updatedAt;
+    public $updatedAt;
 
 
     /**
      * @ORM\ManyToOne(targetEntity=FAQ::class, inversedBy="historicFaqs")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $faq;
+    public $faq;
 
+    public function __toString()
+    {
+        return (string) $this;
+    }
    
     public function getId(): ?int
     {

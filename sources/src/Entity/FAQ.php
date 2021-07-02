@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\AbstractClass;
 use App\Repository\FAQRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,30 +14,30 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass=FAQRepository::class)
  */
-class FAQ
+class FAQ 
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    public $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $title;
+    public $title;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $promoted;
+    public $promoted;
 
     /**
      * @ORM\Column(type="StatusFAQType", nullable=false)
      * @DoctrineAssert\Enum(entity="App\DBAL\Types\StatusFAQType")     
      */
-    private $status;
+    public $status;
 
     
 
@@ -59,21 +60,26 @@ class FAQ
     /**
      * @ORM\OneToMany(targetEntity=AnswersFAQ::class, mappedBy="fAQ")
      */
-    private $answers;
+    public $answers;
 
     /**
      * @ORM\OneToMany(targetEntity=HistoricFaq::class, mappedBy="faq", orphanRemoval=true)
      */
-    private $historicFaqs;
+    public $historicFaqs;
 
     public function __construct()
     {
+        
         $this->answers = new ArrayCollection();
         $this->historicFaqs = new ArrayCollection();
     }
 
-  
     
+  
+    public function __toString()
+    {
+        return (string) $this;
+    }
 
     public function getId(): ?int
     {

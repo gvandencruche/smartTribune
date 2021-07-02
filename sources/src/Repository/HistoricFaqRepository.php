@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\ExportCSV;
 use App\Entity\HistoricFaq;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @method HistoricFaq|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +17,27 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class HistoricFaqRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, HistoricFaq::class);
+        $this->manager = $manager;
+    }
+  
+
+    /**
+     * Export CSV
+     *
+     * @param [type] $faq
+     * @return void
+     */
+    public function exportCSV()
+    {
+        $repository = $this->manager->getRepository('App:HistoricFaq');
+        $donneefaq = $repository->findAll();
+        $stream = __DIR__."/exportHistoricFaq.csv";
+        $exportCSV = new ExportCSV(new HistoricFaq,$donneefaq,$stream);
+        $exportCSV->generateCSV();
+       
     }
 
-    // /**
-    //  * @return HistoricFaq[] Returns an array of HistoricFaq objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?HistoricFaq
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

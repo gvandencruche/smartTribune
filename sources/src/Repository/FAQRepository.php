@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\ExportCSV;
 use App\Entity\AnswersFAQ;
 use App\Entity\HistoricFaq;
 use App\Entity\FAQ;
@@ -103,26 +104,14 @@ class FAQRepository extends ServiceEntityRepository
      * @param [type] $faq
      * @return void
      */
-    public function exportCSV($entity)
+    public function exportCSV()
     {
-      try
-      {
-      
-        
-        $repository = $this->manager->getRepository('App:'.$entity);
-        
-        //TODO Recherche des propriétés de classe de l'entity $entity
-        
-        //TOTO Boucle sur les contents values de l'entity
+        $repository = $this->manager->getRepository('App:FAQ');
+        $donneefaq = $repository->findAll();
+        $stream = __DIR__."/exportFaq.csv";
+        $exportCSV = new ExportCSV(new FAQ,$donneefaq,$stream);
+        $exportCSV->generateCSV();
        
-        //TODO Generation du fichier csv
-
-        
-      }
-      catch(Throwable $e)
-      {
-          return ['status' => 'Error!','message' => $e->getMessage()];
-      }
     }
 
 
