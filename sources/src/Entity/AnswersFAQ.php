@@ -18,7 +18,7 @@ class AnswersFAQ
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    public $id;
 
     
 
@@ -26,18 +26,18 @@ class AnswersFAQ
      * @ORM\Column(name="channel", type="AnswersChannelFAQType", nullable=false)
      * @DoctrineAssert\Enum(entity="App\DBAL\Types\AnswersChannelFAQType")     
      */
-    private $channel;
+    public $channel;
 
     /**
      * @ORM\Column(type="string", length=500)
      */
-    private $body;
+    public $body;
 
     /**
      * @ORM\ManyToOne(targetEntity=FAQ::class, inversedBy="answers")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $fAQ;
+    public $fAQ;
 
     
     

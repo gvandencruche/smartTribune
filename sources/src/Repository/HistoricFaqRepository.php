@@ -32,12 +32,8 @@ class HistoricFaqRepository extends ServiceEntityRepository
      */
     public function exportCSV()
     {
-        $repository = $this->manager->getRepository('App:HistoricFaq');
-        $donneefaq = $repository->findAll();
-        $stream = __DIR__."/exportHistoricFaq.csv";
-        $exportCSV = new ExportCSV(new HistoricFaq,$donneefaq,$stream);
+        $exportCSV = new ExportCSV(new HistoricFaq,$this->manager->getRepository('App:HistoricFaq')->findAll(),$_SERVER['PWD'].'/files/exportHistoricFaq.csv');
         $exportCSV->generateCSV();
-       
     }
 
 }

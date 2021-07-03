@@ -106,10 +106,7 @@ class FAQRepository extends ServiceEntityRepository
      */
     public function exportCSV()
     {
-        $repository = $this->manager->getRepository('App:FAQ');
-        $donneefaq = $repository->findAll();
-        $stream = __DIR__."/exportFaq.csv";
-        $exportCSV = new ExportCSV(new FAQ,$donneefaq,$stream);
+        $exportCSV = new ExportCSV(new FAQ,$this->manager->getRepository('App:FAQ')->findAll(),$_SERVER['PWD'].'/files/exportFaq.csv');
         $exportCSV->generateCSV();
        
     }
