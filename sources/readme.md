@@ -81,6 +81,12 @@ exemple json pour modifier le title et le status de la faq 1 :
 
 ##### Service export CSV:
 
-Non terminé.
-Le choix de la relation FAQ/AnswersFAQ ne m'a pas permis de réaliser dans les temps la classe d'exportation générique des Entity en CSV.
-TODO dans la classe FAQRepository.php
+Developpement d'une classe générique permettant d'exporter les données d'une classe passée en argument.
+Arguments passées dans le construct :
+$object =>  Entity Parent 
+$datas  =>  tableau de flux de donnée 
+$stream =>  Fichier a générer 
+
+Création d'un test tests/exportCSVTest.php
+
+TODO : Cette classe peut evoluer afin de devenir une interface implémentée dans les classes Entity
